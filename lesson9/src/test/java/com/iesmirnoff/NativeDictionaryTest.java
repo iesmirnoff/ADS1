@@ -67,4 +67,21 @@ class NativeDictionaryTest {
         assertEquals(testValue2, dictionary.get(testKey));
     }
 
+    @Test
+    void test_is_key_non_existent_in_not_empty() {
+        NativeDictionary<Integer> dictionary = new NativeDictionary<>(5, Integer.class);
+        String testKey1 = "key1";
+        String testKey2 = "key2";
+        String nonExistentKey = "nonExistentKey";
+        int testValue1 = 1;
+        int testValue2 = 2;
+        dictionary.put(testKey1, testValue1);
+        dictionary.put(testKey2, testValue2);
+        assertTrue(dictionary.isKey(testKey1));
+        assertTrue(dictionary.isKey(testKey2));
+        assertEquals(testValue1, dictionary.get(testKey1));
+        assertEquals(testValue2, dictionary.get(testKey2));
+        assertFalse(dictionary.isKey(nonExistentKey));
+    }
+
 }
