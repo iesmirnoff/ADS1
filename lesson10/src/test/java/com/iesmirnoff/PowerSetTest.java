@@ -159,6 +159,18 @@ class PowerSetTest {
         set1.difference(set2);
         timeAfter = System.currentTimeMillis();
         assertTrue(timeAfter - timeBefore < 2000);
+    }
 
+    @Test
+    void test_get_existent_from_10000() {
+        PowerSet set = new PowerSet();
+        for (int i = 0; i < 10000; i++) {
+            String value = String.format("testValue%s", i);
+            set.put(value);
+        }
+        for (int i = 0; i < 10000; i++) {
+            boolean exist = set.get(String.format("testValue%s", i));
+            assertTrue(exist);
+        }
     }
 }

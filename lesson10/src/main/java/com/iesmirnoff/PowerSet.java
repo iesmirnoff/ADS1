@@ -23,22 +23,22 @@ public class PowerSet
 
     public void put(String value)
     {
-        int index = seekValueIndex(value);
+        int index = findExistentValueIndex(value);
         if (index < 0) {
-            index = hashFun(value);
+            index = findEmptySlot(value);
+            slots[index] = value;
+            quantity++;
         }
-        slots[index] = value;
-        quantity++;
     }
 
     public boolean get(String value)
     {
-        return seekValueIndex(value) >= 0;
+        return findExistentValueIndex(value) >= 0;
     }
 
     public boolean remove(String value)
     {
-        int index = seekValueIndex(value);
+        int index = findExistentValueIndex(value);
         if (index >= 0) {
             slots[index] = null;
             quantity--;
@@ -100,7 +100,7 @@ public class PowerSet
         return true;
     }
 
-    private int seekValueIndex(String value)
+    private int findExistentValueIndex(String value)
     {
         int indexByHash = hashFun(value);
         if (value.equals(slots[indexByHash])) {
@@ -112,6 +112,17 @@ public class PowerSet
             }
         }
         return -1;
+    }
+
+    private int findEmptySlot(String value) {
+        int indexByHash = hashFun(value);
+        for (int i = (indexByHash); i != indexByHash - 1; i = (i + 1) % size) {
+            if (slots[i] == null) {
+                return i;
+            }
+        }
+        return -1;
+
     }
 
     private int hashFun(String value)
